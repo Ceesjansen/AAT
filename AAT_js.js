@@ -1,11 +1,12 @@
 // $(document).ready(function(){
-$('body').append(`
+$('aat').append(`
 <div>
   <div class="condition"></div>
    <div id="header"></div> 
       <div>
         <div class="displayimage" id="imagecontainer">
           <div class="center-image">
+            <h1 id="fixationcross">+</h1>
             <span id="correct" style="color:green">O</span>
             <span id="wrong" style="color:red">X</span>
             <img class="imagebox" id="load-image">
@@ -37,12 +38,12 @@ $('body').append(`
     </div>
   </div> 
 </div>
-<script>
-let fileName= [
-{id: 1, type: "circle", url: "https://cdn.dribbble.com/users/31371/screenshots/269938/400x300.png"}
-]
-let random= true;
-</script>
+// <script>
+// let fileName= [
+//  {id: 1, type: "circle", url: "https://cdn.dribbble.com/users/31371/screenshots/269938/400x300.png"}
+// ]
+// let random= true;
+// </script>
 `)
 
 
@@ -55,7 +56,7 @@ $('#button').on("click", function(){
   setTimeout(function(){
     removeFixationCrossAndAddImage();
     getReactionTimesForApproachingOrAvoiding();
-}, dataService.timerOptions().timer);
+  }, dataService.timerOptions().timer);
 });
 //checks and calculates reaction times 
 function getReactionTimesForApproachingOrAvoiding(){
@@ -141,7 +142,7 @@ function compareInputToImageSet(movementAnswer, rt){
 }
 function answeredCorrectly(rt){
   //writes data to textarea
-  $("input").eq(fileName[dataService.getCurrentQuestion()].id).val($("input").val() + (`{"time": "${rt}"}`));
+  $('.question').eq(fileName[dataService.getCurrentQuestion()].id).find('input').eq(0).val($("input").val() + (`{"time": "${rt}"}`));
   //checks if there are still questions
     $('#button').prop('disabled', false).text('Druk hier om te starten').css({"min-width": "250px", "background-color": "#337ab7"})
     dataService.clickButton();
@@ -152,7 +153,7 @@ function answeredIncorrectly(rt){
   $('#wrong').css(dataService.checkAnswer().feedbackCss);
   setTimeout(function(){
     $('#wrong').html('');
-    $("input").eq(fileName[dataService.getCurrentQuestion()].id).val($("input").val() + (`{"time": "${rt}"}`));
+    $('.question').eq(fileName[dataService.getCurrentQuestion()].id).find('input').eq(1).val($("input").val() + (`{"time": "${rt}"}`));
     $('#button').prop('disabled', false).text('Druk hier om te starten').css({"min-width": "250px", "background-color": "#337ab7"})
     dataService.clickButton();
     dataService.incrementQuestion();
@@ -215,14 +216,14 @@ function dataServices(){
   let timeout= 3000;
   let quickMessage= "Probeer alstublieft het spel serieus uit te voeren";
   let tooSlowMessage = "Probeer alstublieft sneller te reageren";
-  let fixationCross= `<h1 id="fixationcross"> + </h1>`;
+  let fixationCross = `<h1 id="fixationcross"> + </h1>`;
   let htmlCorrect = `<span class="feedback" id="correct" style="color:green">GOED</span>`;
   let htmlWrong = `<span class="feedback" id="wrong" style="color:red">FOUT</span>`;
-  let crossCss = ({"display": "block", "margin-right": "10px"});
+  let crossCss = ({"display": "block", "margin": "0 auto"});
   let removeCss = ({"display": "none"});
   let addImageHtml;
   let button = ($("#btn_continue").length>0) ? $("#btn_continue") : $("#btn_finish");
-  let imageCss = ({"display": "block","margin": "0 auto"})
+  let imageCss = ({"display": "block","margin": "0 auto"});
   let answerMessageCss= $('.feedback').css({"display": "block", "margin-top": "90px"});
   let feedbackCss = ({"display": "block", "margin-top": "50px", "text-align": "center", "font-size": "80px"});
 
