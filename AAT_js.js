@@ -1,5 +1,5 @@
 // $(document).ready(function(){
-$('aat').append(`
+$('#aat').append(`
 <div>
   <div class="condition"></div>
    <div id="header"></div> 
@@ -38,9 +38,9 @@ $('aat').append(`
     </div>
   </div> 
 </div>
-// <script>
+<script>
 // let fileName= [
-//  {id: 1, type: "circle", url: "https://cdn.dribbble.com/users/31371/screenshots/269938/400x300.png"}
+//  {id: 0, type: "sq", url: "https://cdn.dribbble.com/users/31371/screenshots/269938/400x300.png"}
 // ]
 // let random= true;
 // </script>
@@ -128,21 +128,27 @@ if (random === true) {
 }
 //function that compares movement to images/conditions
 function compareInputToImageSet(movementAnswer, rt){
+ 
   if(dataService.getCurrentQuestion() < dataService.getImageSetLength()){
+     
   //checks answer with condition and writes away data accordingly
-    if(movementAnswer === "approach" && fileName[dataService.getCurrentQuestion()].type === condition.condition 
-      || movementAnswer === "avoid" && fileName[dataService.getCurrentQuestion()].type !== condition.condition){
-      answeredCorrectly(rt);
+    if(movementAnswer === "approach" && fileName[dataService.getCurrentQuestion()].type === condition.condition || movementAnswer === "avoid" && fileName[dataService.getCurrentQuestion()].type !== condition.condition){
+        answeredCorrectly(rt);
     }else{
+     
       answeredIncorrectly(rt);
     }
-  } else{
-    dataService.clickButton();
+  } 
+    else{
+      dataService.clickButton();
+    }
   }
-}
+
+
+
 function answeredCorrectly(rt){
   //writes data to textarea
-  $('.question').eq(fileName[dataService.getCurrentQuestion()].id).find('input').eq(0).val($("input").val() + (`{"time": "${rt}"}`));
+  $('.question').find('input').eq(fileName[dataService.getCurrentQuestion()].id*2).val(`"time": "${rt}"`);
   //checks if there are still questions
     $('#button').prop('disabled', false).text('Druk hier om te starten').css({"min-width": "250px", "background-color": "#337ab7"})
     dataService.clickButton();
@@ -153,7 +159,7 @@ function answeredIncorrectly(rt){
   $('#wrong').css(dataService.checkAnswer().feedbackCss);
   setTimeout(function(){
     $('#wrong').html('');
-    $('.question').eq(fileName[dataService.getCurrentQuestion()].id).find('input').eq(1).val($("input").val() + (`{"time": "${rt}"}`));
+    $('.question').find('input').eq((fileName[dataService.getCurrentQuestion()].id*2)+1).val(`"time": "${rt}"}`);
     $('#button').prop('disabled', false).text('Druk hier om te starten').css({"min-width": "250px", "background-color": "#337ab7"})
     dataService.clickButton();
     dataService.incrementQuestion();
